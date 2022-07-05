@@ -47,7 +47,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./dockerfile
+          file: ./Dockerfile
           platforms: linux/amd64
           push: ${{ github.event_name == 'release' && github.event.action == 'created' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
