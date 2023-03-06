@@ -1,0 +1,13 @@
+name: dependabot-build
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  dependabot-build:
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    uses: ./.github/workflows/docker-build-image.yml
+    with:
+      registry_push: false
