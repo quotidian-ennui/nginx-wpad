@@ -9,6 +9,9 @@ on:
         description: 'Whether to push image to ghcr.io'
         type: boolean
 
+env:
+  TARGET_PLATFORMS: linux/amd64,linux/arm64
+
 jobs:
   docker-build-image:
     runs-on: ubuntu-latest
@@ -20,6 +23,8 @@ jobs:
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v2
+      with:
+        platforms: ${{ env.TARGET_PLATFORMS }}
     - name: Login to GitHub Container Registry
       if:  ${{ inputs.registry_push == true }}
       uses: docker/login-action@v2
@@ -45,7 +50,8 @@ jobs:
       with:
         context: .
         file: ./Dockerfile
-        platforms: linux/amd64,linux/arm64/v8
+        platforms: ${{ env.TARGET_PLATFORMS }}
         push: ${{ inputs.registry_push }}
         tags: ${{ steps.docker_meta.outputs.tags }}
         labels: ${{ steps.docker_meta.outputs.labels }}
+        provenance: false
