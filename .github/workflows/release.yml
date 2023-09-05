@@ -27,6 +27,6 @@ jobs:
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
-        body: ${{ steps.changelog.outputs.content }}
+        bodyFile: ${{ steps.changelog.outputs.changelog }}
         draft: false
         makeLatest: true
