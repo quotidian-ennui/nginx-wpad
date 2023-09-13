@@ -27,7 +27,7 @@ jobs:
         platforms: ${{ env.TARGET_PLATFORMS }}
     - name: Login to GitHub Container Registry
       if:  ${{ inputs.registry_push == true }}
-      uses: docker/login-action@v2
+      uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
