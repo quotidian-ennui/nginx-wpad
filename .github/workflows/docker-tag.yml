@@ -5,9 +5,14 @@ on:
     tags:
       - '*'
 
+permissions: {}
+
 jobs:
   docker-tag:
     if: ${{ github.actor != 'dependabot[bot]' }}
+    permissions:
+      contents: read
+      packages: write
     uses: ./.github/workflows/docker-build-image.yml
     with:
       registry_push: true

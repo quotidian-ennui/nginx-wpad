@@ -5,9 +5,40 @@ on:
   pull_request:
     branches: main
 
+permissions: {}
+
 jobs:
   dependabot-build:
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    permissions:
+      contents: read
+    if: |
+      github.actor == 'dependabot[bot]'
     uses: ./.github/workflows/docker-build-image.yml
     with:
       registry_push: false
+
+  dependabot-merge:
+    needs:
+      - dependabot-build
+    permissions:
+      contents: write
+      pull-requests: write
+    if: |
+      success() && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Find associated PR
+      uses: jwalton/gh-find-current-pr@v1.3.3
+      id: findpr
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        state: open
+        sha: ${{ github.event.pull_request.head.sha || github.event.workflow_run.head_sha || github.sha }}
+    - name: merge-if-built
+      continue-on-error: true
+      uses: fastify/github-action-merge-dependabot@v3.10.1
+      with:
+        pr-number: ${{ steps.findpr.outputs.pr }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        merge-method: squash
+        target: minor
