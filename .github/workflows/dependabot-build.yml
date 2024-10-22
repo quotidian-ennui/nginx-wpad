@@ -36,7 +36,7 @@ jobs:
           sha: ${{ github.event.pull_request.head.sha || github.event.workflow_run.head_sha || github.sha }}
       - name: merge-if-built
         continue-on-error: true
-        uses: fastify/github-action-merge-dependabot@3892334d1c649bb8119af3d22a3f3766bd5e593f # v3.10.2
+        uses: fastify/github-action-merge-dependabot@c3bde0759d4f24db16f7b250b2122bc2df57e817 # v3.11.0
         with:
           pr-number: ${{ steps.findpr.outputs.pr }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
