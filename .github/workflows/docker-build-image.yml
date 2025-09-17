@@ -6,8 +6,11 @@ on:
       registry_push:
         required: false
         default: false
-        description: 'Whether to push image to ghcr.io'
+        description: "Whether to push image to registries"
         type: boolean
+    secrets:
+      DOCKERHUB_USER:
+      DOCKERHUB_TOKEN:
 
 jobs:
   docker-build-image:
@@ -15,6 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
       - name: docker-build-push
         uses: quotidian-ennui/actions-olio/docker-image-builder@main
         with:
@@ -26,3 +31,6 @@ jobs:
           ghcr_token: ${{ secrets.GITHUB_TOKEN }}
           cache_from: type=gha
           cache_to: type=gha,mode=max
+          dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
+          dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub_image_name: lewinc/nginx-wpad

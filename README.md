@@ -11,3 +11,11 @@ Have you ever wondered what "automatically detect proxies" does. What it's like 
 
 `WinHttp-Autoproxy-Service` & `WININET Download` want some file called `wpad.dat`, and it's better that I give it to them rather than them finding it from somewhere else?
 
+Essentially it just returns this to avoid you going out of your network to get it:
+
+```javascript
+function FindProxyForURL(url, host)
+{
+  return "DIRECT";
+}
+```

@@ -3,7 +3,7 @@ name: docker-build-tag
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 permissions: {}
 
@@ -16,3 +16,6 @@ jobs:
     uses: ./.github/workflows/docker-build-image.yml
     with:
       registry_push: true
+    secrets:
+      DOCKERHUB_USER: ${{ secrets.DOCKER_USER }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKER_TOKEN }}
