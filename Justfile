@@ -31,21 +31,3 @@ BASE_TAG := USER / "nginx-wpad"
 @changelog *args="--unreleased":
     git cliff "$@"
 
-# tag and optionally the tag
-[group("release")]
-[script]
-release tag push="localonly":
-  #
-  set -eo pipefail
-
-  git diff --quiet || (echo "--> git is dirty" && exit 1)
-  tag="{{ tag }}"
-  push="{{ push }}"
-  git tag "$tag" -m"release: $tag"
-  case "$push" in
-    push|github|gh)
-      git push --tags
-      ;;
-    *)
-      ;;
-  esac
