@@ -29,8 +29,7 @@ jobs:
           ghcr_image_name: ghcr.io/${{ github.repository }}
           ghcr_user: ${{ github.repository_owner }}
           ghcr_token: ${{ secrets.GITHUB_TOKEN }}
-          cache_from: type=gha
-          cache_to: type=gha,mode=max
+          caching: automatic
           dockerhub_user: ${{ secrets.DOCKERHUB_USER }}
           dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
           dockerhub_image_name: lewinc/nginx-wpad
