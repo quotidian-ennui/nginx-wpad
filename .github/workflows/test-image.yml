@@ -1,0 +1,34 @@
+name: test-nginx-wpad
+run-name: test-nginx-wpad
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types:
+      - nginx-wpad-published
+
+permissions: {}
+
+jobs:
+  test-nginx-wpad:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    services:
+      nginx-wpad:
+        image: ghcr.io/${{ github.repository }}:latest
+        ports:
+          - 8080:80
+    steps:
+      - name: check wpad.dat
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        env:
+          NGINX_WPAD_HOST: 127.0.0.1
+          NGINX_WPAD_PORT: ${{ job.services.nginx-wpad.ports['80'] }}
+        with:
+          shell: bash
+          max_attempts: 3
+          retry_wait_seconds: 10
+          timeout_seconds: 5
+          retry_on: error
+          command: |
+            curl -fSsL "http://$NGINX_WPAD_HOST:$NGINX_WPAD_PORT/wpad.dat"
