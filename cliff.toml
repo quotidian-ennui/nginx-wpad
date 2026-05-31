@@ -4,7 +4,11 @@
 # changelog header
 header = """
 # Changelog\n
-This boring changelog just lists the changes to the repo used to build the docker image.\n
+
+This boring changelog just lists the changes to the repo used to build the docker image.
+
+>Note that the tag follows the nginx version; this is intentional and is because of [#82](https://github.com/quotidian-ennui/nginx-wpad/issues/82)
+
 """
 # template for the changelog body
 # https://tera.netlify.app/docs/#introduction

@@ -1,4 +1,4 @@
-name: dependabot-build
+name: build
 on:
   push:
     branches: main
@@ -8,18 +8,16 @@ on:
 permissions: {}
 
 jobs:
-  dependabot-build:
+  build:
     permissions:
       contents: read
-    if: |
-      github.actor == 'dependabot[bot]'
     uses: ./.github/workflows/docker-build-image.yml
     with:
       registry_push: false
 
   dependabot-merge:
     needs:
-      - dependabot-build
+      - build
     permissions:
       contents: write
       pull-requests: write
