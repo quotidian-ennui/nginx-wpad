@@ -18,16 +18,13 @@ updates:
           - "quotidian-ennui/workflows-olio/*"
           - "quotidian-ennui/actions-olio/*"
     schedule:
-      interval: "weekly"
-      day: "wednesday"
-      time: "04:23"
-      timezone: Europe/London
+      interval: "cron"
+      cronjob: "23 04 * * *"
   - package-ecosystem: "docker"
     directory: "/"
     rebase-strategy: disabled
     cooldown:
       default-days: 3
     schedule:
-      interval: "daily"
-      time: "02:12"
-      timezone: "Europe/London"
+      interval: "cron"
+      cronjob: "12 02 * * *"
